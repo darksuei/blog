@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Markdown on Folarin Raphael</title>
-    <link>http://localhost:1313/tags/markdown/</link>
+    <link>https://blog.suei.dev/tags/markdown/</link>
     <description>Recent content in Markdown on Folarin Raphael</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 24 Oct 2024 08:49:59 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/markdown/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.suei.dev/tags/markdown/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Markdown Post</title>
-      <link>http://localhost:1313/posts/markdown/</link>
+      <link>https://blog.suei.dev/posts/markdown/</link>
       <pubDate>Thu, 24 Oct 2024 08:49:59 +0000</pubDate>
-      <guid>http://localhost:1313/posts/markdown/</guid>
+      <guid>https://blog.suei.dev/posts/markdown/</guid>
       <description>&lt;p&gt;Welcome to my &lt;strong&gt;test post&lt;/strong&gt;! This is a basic post written in Markdown to see how it renders on the blog.&lt;/p&gt;&#xA;&lt;h2 id=&#34;what-is-markdown&#34;&gt;What is Markdown?&lt;/h2&gt;&#xA;&lt;p&gt;Markdown is a lightweight markup language with plain-text formatting syntax. It’s often used to format readme files, for writing messages in online discussion forums, and to create rich text using a plain text editor.&lt;/p&gt;&#xA;&lt;h3 id=&#34;key-features-of-markdown&#34;&gt;Key Features of Markdown&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Headers&lt;/strong&gt;: You can create different levels of headers using &lt;code&gt;#&lt;/code&gt; symbols.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Bold and Italics&lt;/strong&gt;: Format text as &lt;em&gt;italic&lt;/em&gt; or &lt;strong&gt;bold&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Lists&lt;/strong&gt;:&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Bulleted lists&lt;/li&gt;&#xA;&lt;li&gt;Numbered lists&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Links&lt;/strong&gt;: &lt;a href=&#34;https://example.com&#34;&gt;This is a link&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Images&lt;/strong&gt;: &#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&lt;figure class=&#34;&#34;&gt;&#xA;&#xA;    &lt;div&gt;&#xA;        &lt;img loading=&#34;lazy&#34; alt=&#34;Test Image&#34; src=&#34; https://via.placeholder.com/150&#34;&gt;&#xA;    &lt;/div&gt;&#xA;&#xA;    &#xA;&lt;/figure&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;code-example&#34;&gt;Code Example&lt;/h2&gt;&#xA;&lt;p&gt;Here’s an example of a code block:&lt;/p&gt;</description>
     </item>
   </channel>
