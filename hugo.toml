@@ -1,0 +1,75 @@
+baseURL = 'https://blog.suei.dev'
+languageCode = 'en-us'
+title = 'Folarin Raphael'
+theme = 'typo'
+paginate = 10
+enableRobotsTXT = true
+
+# # # Disable tags
+# disableKinds = ['taxonomy']
+
+[taxonomies]
+tag = 'tags'
+
+[params]
+# Home meta description
+description = "Suei's personal blog."
+custom_css = ["css/custom_style.css"]
+
+# Appearance settings
+theme = 'auto'
+colorPalette = 'default'
+hideHeader = false
+
+# Intro on main page, content in markdown
+homeIntroContent = """
+I am a cloud native software engineer with a strong foundation in computer science and a passion for solving complex problems.
+"""
+
+singleDateFormat = '2 Jan 2006'
+
+# Collection to display on home
+homeCollectionTitle = 'Posts'
+homeCollection = 'posts'
+
+# Lists parameters
+paginationSize = 25
+listSummaries = true
+listDateFormat = '02 Jan 2006'
+
+# Breadcrumbs
+# breadcrumbs = true
+
+showFooter = true
+# footerContent = """Custom"""
+
+# Social icons
+[[params.social]]
+name = "linkedin"
+url = "https://www.linkedin.com/in/folarin-raphael/"
+
+[[params.social]]
+name = "github"
+url = "https://github.com/darksuei"
+
+[[params.social]]
+name = "discord"
+url = "https://discord.com/users/sueii"
+
+# Main menu pages
+[[params.menu]]
+name = "home"
+url = "/"
+
+[[params.menu]]
+name = "posts"
+url = "/posts"
+
+[[params.menu]]
+name = "portfolio"
+url = "https://suei.dev"
+
+# Syntax highlight on code blocks
+[markup]
+[markup.highlight]
+style = 'bw'
