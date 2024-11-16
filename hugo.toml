@@ -23,7 +23,7 @@ hideHeader = false
 
 # Intro on main page, content in markdown
 homeIntroContent = """
-I am a cloud native software engineer with a strong foundation in computer science and a passion for solving complex problems.
+Cloud native software engineer, passionate about open source, and building scalable systems.
 """
 
 singleDateFormat = '2 Jan 2006'
