@@ -22,7 +22,7 @@
     
 </title>
 
-<link rel="canonical" href="http://localhost:1313/posts/markdown/"/>
+<link rel="canonical" href="http://localhost:1313/posts/yet_another_rpc/"/>
 
 
 
@@ -140,7 +140,8 @@
   
 
   <div class="single-content">
-    <p><strong>What exactly is an RPC framework?</strong></p>
+    <p>KubeRPC is a lightweight kubernetes-native RPC framework designed to enable seamless and low-latency communication between microservices in a Kubernetes cluster.</p>
+<p><strong>What exactly is an RPC framework?</strong></p>
 <p><a href="https://www.ibm.com/docs/en/aix/7.3?topic=concepts-remote-procedure-call">Remote Procedure Call</a>(RPC) is a  protocol that allows a program to request a service or execute a functionon another program running on a different server as if it were a local function call.</p>
 <p>It handles the communication between the two systems, making distributed systems work smoothly.</p>
 <figure><img src="/images/rpc_diagram.png"
@@ -149,8 +150,6 @@
     </figcaption>
 </figure>
 
-<p><strong>And what is KubeRPC?</strong></p>
-<p><a href="https://github.com/darksuei/kubeRPC?tab=readme-ov-file#kuberpc">KubeRPC</a> is a lightweight kubernetes-native RPC framework designed to enable seamless and low-latency communication between microservices in a Kubernetes cluster.</p>
 <p><strong>Why KubeRPC and why should you care?</strong></p>
 <p>One of the main points of controversy when transitioning from a monolithic architecture to a microservice based architecture is the increased latency overhead due to the shift from in-memory function calls to network calls.</p>
 <p>Over time, many solutions have been developed to address this challenge, but most are not kubernetes-native and often require complex serialization protocols or additional declarative languages.</p>

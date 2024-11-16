@@ -2,25 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://blog.suei.dev/tags/blog/</loc>
-    <lastmod>2024-10-24T08:49:59+00:00</lastmod>
+    <loc>https://blog.suei.dev/tags/cloud-native/</loc>
+    <lastmod>2024-11-16T08:49:59+00:00</lastmod>
   </url><url>
     <loc>https://blog.suei.dev/</loc>
-    <lastmod>2024-10-24T08:49:59+00:00</lastmod>
+    <lastmod>2024-11-16T08:49:59+00:00</lastmod>
   </url><url>
-    <loc>https://blog.suei.dev/tags/markdown/</loc>
-    <lastmod>2024-10-24T08:49:59+00:00</lastmod>
+    <loc>https://blog.suei.dev/tags/kubernetes/</loc>
+    <lastmod>2024-11-16T08:49:59+00:00</lastmod>
   </url><url>
-    <loc>https://blog.suei.dev/posts/markdown/</loc>
-    <lastmod>2024-10-24T08:49:59+00:00</lastmod>
+    <loc>https://blog.suei.dev/tags/kuberpc/</loc>
+    <lastmod>2024-11-16T08:49:59+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.suei.dev/posts/yet_another_rpc_framework/</loc>
+    <lastmod>2024-11-16T08:49:59+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.suei.dev/tags/micorservices/</loc>
+    <lastmod>2024-11-16T08:49:59+00:00</lastmod>
   </url><url>
     <loc>https://blog.suei.dev/posts/</loc>
-    <lastmod>2024-10-24T08:49:59+00:00</lastmod>
+    <lastmod>2024-11-16T08:49:59+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.suei.dev/tags/rpc/</loc>
+    <lastmod>2024-11-16T08:49:59+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.suei.dev/tags/sdk/</loc>
+    <lastmod>2024-11-16T08:49:59+00:00</lastmod>
   </url><url>
     <loc>https://blog.suei.dev/tags/</loc>
-    <lastmod>2024-10-24T08:49:59+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.suei.dev/tags/test/</loc>
-    <lastmod>2024-10-24T08:49:59+00:00</lastmod>
+    <lastmod>2024-11-16T08:49:59+00:00</lastmod>
   </url>
 </urlset>
