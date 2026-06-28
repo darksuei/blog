@@ -144,11 +144,11 @@
   
 
   <div class="single-content">
-    <p>About a year and a half ago I wrote about <a href="https://github.com/darksuei/kubeRPC">KubeRPC</a> — a lightweight RPC framework I built to reduce the latency overhead of HTTP-based microservice communication inside a Kubernetes cluster.</p>
+    <p>About a year and a half ago I wrote about <a href="https://github.com/darksuei/kubeRPC">KubeRPC</a> - a lightweight RPC framework I built to reduce the latency overhead of HTTP-based microservice communication inside a Kubernetes cluster.</p>
 <p>The core idea was straightforward: instead of going through HTTP for every internal call, services talk to each other directly over persistent TCP connections with MessagePack encoding. Benchmarks showed roughly 60% lower latency compared to equivalent HTTP calls in the same cluster.</p>
 <p>But there was a problem.</p>
 <p><strong>What was the problem?</strong></p>
-<p>In v1, every service that wanted to participate in the mesh had to be configured manually — pass in the core URL, the service name, the host, the port. Every. Single. Service.</p>
+<p>In v1, every service that wanted to participate in the mesh had to be configured manually - pass in the core URL, the service name, the host, the port. Every. Single. Service.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="font-weight:bold">const</span> rpc = <span style="font-weight:bold">new</span> KubeRPC({
 </span></span><span style="display:flex;"><span>  coreURL: <span style="font-style:italic">&#34;http://kuberpc-core:8080&#34;</span>,
 </span></span><span style="display:flex;"><span>  serviceName: <span style="font-style:italic">&#34;user-service&#34;</span>,
@@ -159,7 +159,7 @@
 <p>The framework was Kubernetes-aware, but not Kubernetes-native.</p>
 <p><strong>What changed in v2?</strong></p>
 <p>v2 ships a <a href="https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/">mutating admission webhook</a>. If you are not familiar, this is a Kubernetes mechanism that lets you intercept pod creation requests and modify them before the pod is ever scheduled.</p>
-<p>When the KubeRPC webhook sees a pod annotated with <code>kuberpc.suei.io/enabled: &quot;true&quot;</code>, it patches the pod spec with the configuration it needs — injected directly as environment variables before the container starts.</p>
+<p>When the KubeRPC webhook sees a pod annotated with <code>kuberpc.suei.io/enabled: &quot;true&quot;</code>, it patches the pod spec with the configuration it needs - injected directly as environment variables before the container starts.</p>
 <p>The same setup from above now looks like this:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="font-weight:bold">annotations</span>:
 </span></span><span style="display:flex;"><span>  <span style="font-weight:bold">kuberpc.suei.io/enabled</span>: <span style="font-style:italic">&#34;true&#34;</span>
@@ -170,10 +170,10 @@
 <p><strong>What exactly does the webhook inject?</strong></p>
 <p>Four environment variables:</p>
 <ul>
-<li><code>KUBERPC_CORE_URL</code> — address of the core service registry</li>
-<li><code>KUBERPC_SERVICE_NAME</code> — your service name, from the annotation</li>
-<li><code>KUBERPC_HOST</code> — the cluster DNS name (<code>&lt;service&gt;.&lt;namespace&gt;.svc.cluster.local</code>)</li>
-<li><code>KUBERPC_PORT</code> — the TCP port the SDK listens on (default: 7749)</li>
+<li><code>KUBERPC_CORE_URL</code> - address of the core service registry</li>
+<li><code>KUBERPC_SERVICE_NAME</code> - your service name, from the annotation</li>
+<li><code>KUBERPC_HOST</code> - the cluster DNS name (<code>&lt;service&gt;.&lt;namespace&gt;.svc.cluster.local</code>)</li>
+<li><code>KUBERPC_PORT</code> - the TCP port the SDK listens on (default: 7749)</li>
 </ul>
 <p>The SDK reads these on startup and configures itself. No code changes required when you move between environments. No config files to manage. Adding a new service to the mesh is an annotation, not a pull request touching five other services.</p>
 <p><strong>What about calling other services?</strong></p>
@@ -182,9 +182,9 @@
 </span></span></code></pre></div><p>Now:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="font-weight:bold">const</span> userService = rpc.service(<span style="font-style:italic">&#34;user-service&#34;</span>);
 </span></span><span style="display:flex;"><span><span style="font-weight:bold">const</span> user = <span style="font-weight:bold">await</span> userService.call(<span style="font-style:italic">&#34;getUser&#34;</span>, { id: <span style="font-style:italic">&#34;123&#34;</span> });
-</span></span></code></pre></div><p>Subtle difference, but meaningful in a real codebase. You create a proxy once per dependency and use it like any other object. The underlying endpoint is resolved and cached on first use — every call after that goes directly over the persistent TCP connection with no registry lookup.</p>
+</span></span></code></pre></div><p>Subtle difference, but meaningful in a real codebase. You create a proxy once per dependency and use it like any other object. The underlying endpoint is resolved and cached on first use - every call after that goes directly over the persistent TCP connection with no registry lookup.</p>
 <p><strong>How does that TCP connection actually work?</strong></p>
-<p>On the first call to a service, the SDK asks the core registry for the target&rsquo;s host and port, then opens a TCP connection. That connection stays open. Every subsequent call skips the registry entirely — it is just a MessagePack frame going over the wire and a response coming back.</p>
+<p>On the first call to a service, the SDK asks the core registry for the target&rsquo;s host and port, then opens a TCP connection. That connection stays open. Every subsequent call skips the registry entirely - it is just a MessagePack frame going over the wire and a response coming back.</p>
 <p>The core is consulted exactly once per service per process lifetime.</p>
 <p><strong>Does the webhook break anything if it goes down?</strong></p>
 <p>No. The webhook is configured with <code>failurePolicy: Ignore</code>. If the webhook is unavailable for any reason, pod scheduling continues as normal. Services without the annotation are completely unaffected. KubeRPC never sits in the critical path of your cluster.</p>
@@ -220,11 +220,11 @@
 </span></span></code></pre></div><p><strong>What is still on the roadmap?</strong></p>
 <p>The foundation is solid. What I am still working on:</p>
 <ul>
-<li>Request multiplexing — concurrent calls to the same service are currently serialised through a promise queue. Adding request IDs to the wire format will allow them to travel in parallel over a single connection.</li>
+<li>Request multiplexing - concurrent calls to the same service are currently serialised through a promise queue. Adding request IDs to the wire format will allow them to travel in parallel over a single connection.</li>
 <li>Retries and timeouts</li>
-<li>Go and Python SDKs — the protocol is language-agnostic, the SDKs just need to be written</li>
-<li>Service TTL and heartbeat — stale registrations from crashed pods should expire automatically</li>
-<li>Per-method observability — latency histograms and OpenTelemetry tracing</li>
+<li>Go and Python SDKs - the protocol is language-agnostic, the SDKs just need to be written</li>
+<li>Service TTL and heartbeat - stale registrations from crashed pods should expire automatically</li>
+<li>Per-method observability - latency histograms and OpenTelemetry tracing</li>
 </ul>
 <p><strong>Give it a shot</strong></p>
 <p>If your services are already running in Kubernetes, you are two annotations away from dropping HTTP for all internal calls.</p>

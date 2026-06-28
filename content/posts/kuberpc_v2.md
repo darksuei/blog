@@ -7,7 +7,7 @@ readTime = true
 tags = ["kuberpc", "rpc", "sdk", "kubernetes", "cloud-native", "microservices", "webhook"]
 +++
 
-About a year and a half ago I wrote about [KubeRPC](https://github.com/darksuei/kubeRPC) — a lightweight RPC framework I built to reduce the latency overhead of HTTP-based microservice communication inside a Kubernetes cluster.
+About a year and a half ago I wrote about [KubeRPC](https://github.com/darksuei/kubeRPC) - a lightweight RPC framework I built to reduce the latency overhead of HTTP-based microservice communication inside a Kubernetes cluster.
 
 The core idea was straightforward: instead of going through HTTP for every internal call, services talk to each other directly over persistent TCP connections with MessagePack encoding. Benchmarks showed roughly 60% lower latency compared to equivalent HTTP calls in the same cluster.
 
@@ -15,7 +15,7 @@ But there was a problem.
 
 **What was the problem?**
 
-In v1, every service that wanted to participate in the mesh had to be configured manually — pass in the core URL, the service name, the host, the port. Every. Single. Service.
+In v1, every service that wanted to participate in the mesh had to be configured manually - pass in the core URL, the service name, the host, the port. Every. Single. Service.
 
 ```js
 const rpc = new KubeRPC({
@@ -34,7 +34,7 @@ The framework was Kubernetes-aware, but not Kubernetes-native.
 
 v2 ships a [mutating admission webhook](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/). If you are not familiar, this is a Kubernetes mechanism that lets you intercept pod creation requests and modify them before the pod is ever scheduled.
 
-When the KubeRPC webhook sees a pod annotated with `kuberpc.suei.io/enabled: "true"`, it patches the pod spec with the configuration it needs — injected directly as environment variables before the container starts.
+When the KubeRPC webhook sees a pod annotated with `kuberpc.suei.io/enabled: "true"`, it patches the pod spec with the configuration it needs - injected directly as environment variables before the container starts.
 
 The same setup from above now looks like this:
 
@@ -56,10 +56,10 @@ No arguments. No knowledge of the registry URL. No hardcoded hostnames. The webh
 
 Four environment variables:
 
-- `KUBERPC_CORE_URL` — address of the core service registry
-- `KUBERPC_SERVICE_NAME` — your service name, from the annotation
-- `KUBERPC_HOST` — the cluster DNS name (`<service>.<namespace>.svc.cluster.local`)
-- `KUBERPC_PORT` — the TCP port the SDK listens on (default: 7749)
+- `KUBERPC_CORE_URL` - address of the core service registry
+- `KUBERPC_SERVICE_NAME` - your service name, from the annotation
+- `KUBERPC_HOST` - the cluster DNS name (`<service>.<namespace>.svc.cluster.local`)
+- `KUBERPC_PORT` - the TCP port the SDK listens on (default: 7749)
 
 The SDK reads these on startup and configures itself. No code changes required when you move between environments. No config files to manage. Adding a new service to the mesh is an annotation, not a pull request touching five other services.
 
@@ -78,11 +78,11 @@ const userService = rpc.service("user-service");
 const user = await userService.call("getUser", { id: "123" });
 ```
 
-Subtle difference, but meaningful in a real codebase. You create a proxy once per dependency and use it like any other object. The underlying endpoint is resolved and cached on first use — every call after that goes directly over the persistent TCP connection with no registry lookup.
+Subtle difference, but meaningful in a real codebase. You create a proxy once per dependency and use it like any other object. The underlying endpoint is resolved and cached on first use - every call after that goes directly over the persistent TCP connection with no registry lookup.
 
 **How does that TCP connection actually work?**
 
-On the first call to a service, the SDK asks the core registry for the target's host and port, then opens a TCP connection. That connection stays open. Every subsequent call skips the registry entirely — it is just a MessagePack frame going over the wire and a response coming back.
+On the first call to a service, the SDK asks the core registry for the target's host and port, then opens a TCP connection. That connection stays open. Every subsequent call skips the registry entirely - it is just a MessagePack frame going over the wire and a response coming back.
 
 The core is consulted exactly once per service per process lifetime.
 
@@ -144,11 +144,11 @@ const user = await userService.call("getUser", { id: "123" });
 
 The foundation is solid. What I am still working on:
 
-- Request multiplexing — concurrent calls to the same service are currently serialised through a promise queue. Adding request IDs to the wire format will allow them to travel in parallel over a single connection.
+- Request multiplexing - concurrent calls to the same service are currently serialised through a promise queue. Adding request IDs to the wire format will allow them to travel in parallel over a single connection.
 - Retries and timeouts
-- Go and Python SDKs — the protocol is language-agnostic, the SDKs just need to be written
-- Service TTL and heartbeat — stale registrations from crashed pods should expire automatically
-- Per-method observability — latency histograms and OpenTelemetry tracing
+- Go and Python SDKs - the protocol is language-agnostic, the SDKs just need to be written
+- Service TTL and heartbeat - stale registrations from crashed pods should expire automatically
+- Per-method observability - latency histograms and OpenTelemetry tracing
 
 **Give it a shot**
 
