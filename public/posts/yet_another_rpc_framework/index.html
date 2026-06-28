@@ -35,7 +35,7 @@
 
 
 
-<link rel="stylesheet" href="/assets/combined.min.4323cceb560f67267f1f0cbc4ea9e991c7948e479c7d44d4bf800bde18fb00b8.css" media="all">
+<link rel="stylesheet" href="/assets/combined.min.a6824bbee0d90d5af09fed9b70395ce7076b615e315037455d903314e96ef91b.css" media="all">
 
 
 
@@ -149,9 +149,9 @@
 <p><a href="https://www.ibm.com/docs/en/aix/7.3?topic=concepts-remote-procedure-call">Remote Procedure Call</a>(RPC) is a  protocol that allows a program to request a service or execute a functionon another program running on a different server as if it were a local function call.</p>
 <p>It handles the communication between the two systems, making distributed systems work smoothly.</p>
 <figure><img src="/images/rpc_diagram.png"
-    alt="Remote procedure call"><figcaption>
-      <p>Implementing Remote Procedure Calls, Birrell &amp; Nelson, 1981</p>
-    </figcaption>
+			alt="Remote procedure call"><figcaption>
+			<p>Implementing Remote Procedure Calls, Birrell &amp; Nelson, 1981</p>
+		</figcaption>
 </figure>
 
 <p><strong>Why KubeRPC and why should you care?</strong></p>
@@ -183,7 +183,7 @@
 <p>The SDKs available allow you to easily interact with the core service, enabling you to register methods and invoke remote methods on other services in an abstracted yet intuitive manner.</p>
 <h4 id="getting-started-with-kuberpc">Getting Started with KubeRPC</h4>
 <p>Getting started with KubeRPC is as easy as deploying a Helm chart to your Kubernetes cluster. Just run the following command, and you’re ready to go!</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>helm install kuberpc-core https://github.com/darksuei/kubeRPC/raw/main/helm_chart/kuberpc-core-0.1.0.tgz --namespace &lt;your-namespace&gt; -f /path/to/custom-values.yaml
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>helm install kuberpc-core https://github.com/darksuei/kubeRPC/raw/main/helm_chart/kuberpc-core-0.1.0.tgz --namespace &lt;your-namespace&gt; -f /path/to/custom-values.yaml
 </span></span></code></pre></div><p><strong>Too much talk, show me a demo!</strong></p>
 <p>To see KubeRPC in action, you can use the <a href="https://github.com/darksuei/kubeRPC-node-demo/blob/main/docker-compose.yaml">docker compose demonstration</a>, which includes the KubeRPC core, a client, and a server.</p>
 <p>This demo showcases how KubeRPC facilitates seamless communication between services as if they were just function calls.</p>
@@ -200,6 +200,35 @@
 
   
   
+
+<div class="single-pagination">
+    <hr />
+
+    <div class="flex">
+
+        <div class="single-pagination-prev">
+            
+        </div>
+
+        <div class="single-pagination-next">
+            
+            <div class="single-pagination-container-next">
+                <div class="single-pagination-text">
+                    <a href="/posts/kuberpc_v2/">
+                        KubeRPC v2: Now Actually Kubernetes-Native
+                    </a>
+                </div>
+                <div class="single-pagination-text">→</div>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <hr />
+</div>
+
+
 
   
 

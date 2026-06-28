@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en-us"
+  dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+
+<link rel="icon" type="image/ico" href="https://blog.suei.dev//favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.suei.dev//favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.suei.dev//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://blog.suei.dev//android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://blog.suei.dev//apple-touch-icon.png">
+
+<meta name="description" content="KubeRPC v2 ships a mutating admission webhook that eliminates all in-cluster configuration. Your services just work with a single annotation."/>
+
+<title>
+    
+    KubeRPC v2: Now Actually Kubernetes-Native | Folarin Raphael
+    
+</title>
+
+<link rel="canonical" href="https://blog.suei.dev/posts/kuberpc_v2/"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/assets/combined.min.a6824bbee0d90d5af09fed9b70395ce7076b615e315037455d903314e96ef91b.css" media="all">
+
+
+
+
+
+
+
+
+
+  </head>
+
+  
+
+  
+  
+  
+
+  <body class="auto">
+
+    <div class="content">
+      <header>
+        
+
+<div class="header">
+
+    
+
+    <h1 class="header-title">Folarin Raphael</h1>
+
+    <div class="flex">
+        
+
+        
+        
+      
+        <p class="small ">
+            <a href="/" >
+                /home
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="/posts" >
+                /posts
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="https://suei.dev" >
+                /portfolio
+            </a>
+        </p>
+        
+        
+    </div>
+
+    
+
+</div>
+
+      </header>
+
+      <main class="main">
+        
+
+
+
+
+
+
+
+<div >
+
+  <div class="single-intro-container">
+
+    
+
+    <h1 class="single-title">KubeRPC v2: Now Actually Kubernetes-Native</h1>
+    
+
+    
+
+    <p class="single-readtime">
+      
+      
+      
+      <time datetime="2026-06-28T00:00:00&#43;00:00">28 Jun 2026</time>
+      
+
+      
+      &nbsp; · &nbsp;
+      4 min read
+      
+    </p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  <div class="single-content">
+    <p>About a year and a half ago I wrote about <a href="https://github.com/darksuei/kubeRPC">KubeRPC</a> — a lightweight RPC framework I built to reduce the latency overhead of HTTP-based microservice communication inside a Kubernetes cluster.</p>
+<p>The core idea was straightforward: instead of going through HTTP for every internal call, services talk to each other directly over persistent TCP connections with MessagePack encoding. Benchmarks showed roughly 60% lower latency compared to equivalent HTTP calls in the same cluster.</p>
+<p>But there was a problem.</p>
+<p><strong>What was the problem?</strong></p>
+<p>In v1, every service that wanted to participate in the mesh had to be configured manually — pass in the core URL, the service name, the host, the port. Every. Single. Service.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="font-weight:bold">const</span> rpc = <span style="font-weight:bold">new</span> KubeRPC({
+</span></span><span style="display:flex;"><span>  coreURL: <span style="font-style:italic">&#34;http://kuberpc-core:8080&#34;</span>,
+</span></span><span style="display:flex;"><span>  serviceName: <span style="font-style:italic">&#34;user-service&#34;</span>,
+</span></span><span style="display:flex;"><span>  host: <span style="font-style:italic">&#34;user-service.default.svc.cluster.local&#34;</span>,
+</span></span><span style="display:flex;"><span>  port: 7749
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>Every developer working on every service needed to know about KubeRPC&rsquo;s internals just to use it. That is the opposite of seamless integration, and honestly the opposite of what I set out to build.</p>
+<p>The framework was Kubernetes-aware, but not Kubernetes-native.</p>
+<p><strong>What changed in v2?</strong></p>
+<p>v2 ships a <a href="https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/">mutating admission webhook</a>. If you are not familiar, this is a Kubernetes mechanism that lets you intercept pod creation requests and modify them before the pod is ever scheduled.</p>
+<p>When the KubeRPC webhook sees a pod annotated with <code>kuberpc.suei.io/enabled: &quot;true&quot;</code>, it patches the pod spec with the configuration it needs — injected directly as environment variables before the container starts.</p>
+<p>The same setup from above now looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="font-weight:bold">annotations</span>:
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">kuberpc.suei.io/enabled</span>: <span style="font-style:italic">&#34;true&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">kuberpc.suei.io/service</span>: <span style="font-style:italic">&#34;user-service&#34;</span>
+</span></span></code></pre></div><p>And on the SDK side:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="font-weight:bold">const</span> rpc = <span style="font-weight:bold">new</span> KubeRPC();
+</span></span></code></pre></div><p>No arguments. No knowledge of the registry URL. No hardcoded hostnames. The webhook handled it.</p>
+<p><strong>What exactly does the webhook inject?</strong></p>
+<p>Four environment variables:</p>
+<ul>
+<li><code>KUBERPC_CORE_URL</code> — address of the core service registry</li>
+<li><code>KUBERPC_SERVICE_NAME</code> — your service name, from the annotation</li>
+<li><code>KUBERPC_HOST</code> — the cluster DNS name (<code>&lt;service&gt;.&lt;namespace&gt;.svc.cluster.local</code>)</li>
+<li><code>KUBERPC_PORT</code> — the TCP port the SDK listens on (default: 7749)</li>
+</ul>
+<p>The SDK reads these on startup and configures itself. No code changes required when you move between environments. No config files to manage. Adding a new service to the mesh is an annotation, not a pull request touching five other services.</p>
+<p><strong>What about calling other services?</strong></p>
+<p>v2 also ships a cleaner call API. Previously:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="font-weight:bold">const</span> result = <span style="font-weight:bold">await</span> rpc.call(<span style="font-style:italic">&#34;user-service&#34;</span>, <span style="font-style:italic">&#34;getUser&#34;</span>, { id: <span style="font-style:italic">&#34;123&#34;</span> });
+</span></span></code></pre></div><p>Now:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="font-weight:bold">const</span> userService = rpc.service(<span style="font-style:italic">&#34;user-service&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">const</span> user = <span style="font-weight:bold">await</span> userService.call(<span style="font-style:italic">&#34;getUser&#34;</span>, { id: <span style="font-style:italic">&#34;123&#34;</span> });
+</span></span></code></pre></div><p>Subtle difference, but meaningful in a real codebase. You create a proxy once per dependency and use it like any other object. The underlying endpoint is resolved and cached on first use — every call after that goes directly over the persistent TCP connection with no registry lookup.</p>
+<p><strong>How does that TCP connection actually work?</strong></p>
+<p>On the first call to a service, the SDK asks the core registry for the target&rsquo;s host and port, then opens a TCP connection. That connection stays open. Every subsequent call skips the registry entirely — it is just a MessagePack frame going over the wire and a response coming back.</p>
+<p>The core is consulted exactly once per service per process lifetime.</p>
+<p><strong>Does the webhook break anything if it goes down?</strong></p>
+<p>No. The webhook is configured with <code>failurePolicy: Ignore</code>. If the webhook is unavailable for any reason, pod scheduling continues as normal. Services without the annotation are completely unaffected. KubeRPC never sits in the critical path of your cluster.</p>
+<p><strong>Getting started</strong></p>
+<p>Deploy the core with Helm. The webhook and its TLS certificates are bundled and managed automatically by the chart.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>helm upgrade --install kuberpc-core <span style="font-weight:bold;font-style:italic">\
+</span></span></span><span style="display:flex;"><span>  oci://ghcr.io/darksuei/charts/kuberpc-core <span style="font-weight:bold;font-style:italic">\
+</span></span></span><span style="display:flex;"><span>  --version 2.0.0 <span style="font-weight:bold;font-style:italic">\
+</span></span></span><span style="display:flex;"><span>  -n kuberpc <span style="font-weight:bold;font-style:italic">\
+</span></span></span><span style="display:flex;"><span>  --create-namespace <span style="font-weight:bold;font-style:italic">\
+</span></span></span><span style="display:flex;"><span>  --wait
+</span></span></code></pre></div><p>Annotate your pods:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="font-weight:bold">annotations</span>:
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">kuberpc.suei.io/enabled</span>: <span style="font-style:italic">&#34;true&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">kuberpc.suei.io/service</span>: <span style="font-style:italic">&#34;my-service&#34;</span>
+</span></span></code></pre></div><p>Install the SDK:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm install kuberpc-node
+</span></span></code></pre></div><p>Register methods on your server:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="font-weight:bold">import</span> { KubeRPC } from <span style="font-style:italic">&#34;kuberpc-node&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">const</span> rpc = <span style="font-weight:bold">new</span> KubeRPC();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">await</span> rpc.register(<span style="font-style:italic">&#34;getUser&#34;</span>, <span style="font-weight:bold">async</span> ({ id }) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">return</span> db.users.findById(id);
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>Call them from any other annotated service:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="font-weight:bold">import</span> { KubeRPC } from <span style="font-style:italic">&#34;kuberpc-node&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">const</span> rpc = <span style="font-weight:bold">new</span> KubeRPC();
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">const</span> userService = rpc.service(<span style="font-style:italic">&#34;user-service&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">const</span> user = <span style="font-weight:bold">await</span> userService.call(<span style="font-style:italic">&#34;getUser&#34;</span>, { id: <span style="font-style:italic">&#34;123&#34;</span> });
+</span></span></code></pre></div><p><strong>What is still on the roadmap?</strong></p>
+<p>The foundation is solid. What I am still working on:</p>
+<ul>
+<li>Request multiplexing — concurrent calls to the same service are currently serialised through a promise queue. Adding request IDs to the wire format will allow them to travel in parallel over a single connection.</li>
+<li>Retries and timeouts</li>
+<li>Go and Python SDKs — the protocol is language-agnostic, the SDKs just need to be written</li>
+<li>Service TTL and heartbeat — stale registrations from crashed pods should expire automatically</li>
+<li>Per-method observability — latency histograms and OpenTelemetry tracing</li>
+</ul>
+<p><strong>Give it a shot</strong></p>
+<p>If your services are already running in Kubernetes, you are two annotations away from dropping HTTP for all internal calls.</p>
+<p><a href="https://github.com/darksuei/kubeRPC">KubeRPC on GitHub</a> | <a href="https://www.npmjs.com/package/kuberpc-node">npm</a></p>
+
+    
+  </div>
+
+  
+
+
+  
+
+  
+  
+
+<div class="single-pagination">
+    <hr />
+
+    <div class="flex">
+
+        <div class="single-pagination-prev">
+            
+            <div class="single-pagination-container-prev">
+                <div class="single-pagination-text">←</div>
+                <div class="single-pagination-text">
+                    <a href="/posts/yet_another_rpc_framework/">
+                        KubeRPC: Yet Another RPC Framework?
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="single-pagination-next">
+            
+        </div>
+
+    </div>
+
+    <hr />
+</div>
+
+
+
+  
+
+  
+
+  
+  <div class="back-to-top">
+    <a href="#top">
+      back to top
+    </a>
+  </div>
+  
+
+</div>
+
+
+      </main>
+    </div>
+
+    <footer>
+      
+
+    
+    <p>Powered by
+        <a href="https://gohugo.io/">Hugo</a>
+        and
+        <a href="https://github.com/tomfran/typo">tomfran/typo</a>
+    </p>
+    
+    
+    
+
+
+
+    </footer>
+    
+  </body>
+
+  <script>
+
+  function isAuto() {
+    return document.body.classList.contains("auto");
+  }
+
+  function setTheme() {
+    if (!isAuto()) {
+      return
+    }
+
+    document.body.classList.remove("auto");
+    let cls = "light";
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      cls = "dark";
+    }
+
+    document.body.classList.add(cls);
+  }
+
+  function invertBody() {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+  }
+
+  if (isAuto()) {
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(invertBody);
+  }
+
+  setTheme();
+
+</script>
+
+</html>
