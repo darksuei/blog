@@ -1,6 +1,6 @@
 baseURL = 'https://blog.suei.dev'
 languageCode = 'en-us'
-title = 'Folarin Raphael'
+title = 'Blog | Folarin Raphael'
 theme = 'typo'
 paginate = 10
 enableRobotsTXT = true
