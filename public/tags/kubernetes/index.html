@@ -2,19 +2,17 @@
 <html lang="en-us"
   dir="ltr">
 
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
-
-<link rel="icon" type="image/ico" href="https://blog.suei.dev//favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://blog.suei.dev//favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://blog.suei.dev//favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="https://blog.suei.dev//android-chrome-192x192.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://blog.suei.dev//apple-touch-icon.png">
-
-<link rel="alternate" type="application/rss+xml" href="https://blog.suei.dev/tags/kubernetes/index.xml" title="Blog | Folarin Raphael">
+<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/tags/kubernetes/index.xml" title="Blog | Folarin Raphael">
 <meta name="description" content=""/>
 
 <title>
@@ -23,7 +21,7 @@
     
 </title>
 
-<link rel="canonical" href="https://blog.suei.dev/tags/kubernetes/"/>
+<link rel="canonical" href="http://localhost:1313/tags/kubernetes/"/>
 
 
 
@@ -37,11 +35,6 @@
 
 
 <link rel="stylesheet" href="/assets/combined.min.a6824bbee0d90d5af09fed9b70395ce7076b615e315037455d903314e96ef91b.css" media="all">
-
-
-
-
-
 
 
 
@@ -87,7 +80,7 @@
         
       
         <p class="small ">
-            <a href="https://suei.dev" >
+            <a href="https://suei.io" >
                 /portfolio
             </a>
         </p>
@@ -134,17 +127,17 @@
 
     <div>
         <p class="line-title">
-            <a href="/posts/kuberpc_v2/">
-                KubeRPC v2: Now Actually Kubernetes-Native
+            <a href="/posts/kuberpc-v2/">
+                KubeRPC v2: Actually Kubernetes-Native
             </a>
         </p>
 
         
-        <p class="line-summary"> <p>About a year and a half ago I wrote about <a href="https://github.com/darksuei/kubeRPC">KubeRPC</a> - a lightweight RPC framework I built to reduce the latency overhead of HTTP-based microservice communication inside a Kubernetes cluster.</p>
-<p>The core idea was straightforward: instead of going through HTTP for every internal call, services talk to each other directly over persistent TCP connections with MessagePack encoding. Benchmarks showed roughly 60% lower latency compared to equivalent HTTP calls in the same cluster.</p> </p>
+        <p class="line-summary"> KubeRPC v2 now ships a mutating admission webhook that eliminates all in-cluster configuration. Your services just work with a single annotation. </p>
         
     </div>
 </div>
+
     
 
     
@@ -161,19 +154,17 @@
 
     <div>
         <p class="line-title">
-            <a href="/posts/yet_another_rpc_framework/">
+            <a href="/posts/yet-another-rpc-framework/">
                 KubeRPC: Yet Another RPC Framework?
             </a>
         </p>
 
         
-        <p class="line-summary"> <p>KubeRPC is a lightweight kubernetes-native RPC framework designed to enable seamless and low-latency communication between microservices in a Kubernetes cluster.</p>
-<p><strong>What exactly is an RPC framework?</strong></p>
-<p><a href="https://www.ibm.com/docs/en/aix/7.3?topic=concepts-remote-procedure-call">Remote Procedure Call</a>(RPC) is a  protocol that allows a program to request a service or execute a functionon another program running on a different server as if it were a local function call.</p>
-<p>It handles the communication between the two systems, making distributed systems work smoothly.</p> </p>
+        <p class="line-summary"> KubeRPC is a lightweight kubernetes-native RPC framework designed to enable seamless and low-latency communication between microservices in a Kubernetes cluster. </p>
         
     </div>
 </div>
+
     
 
     

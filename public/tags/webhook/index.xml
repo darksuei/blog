@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Webhook on Blog | Folarin Raphael</title>
-		<link>https://blog.suei.dev/tags/webhook/</link>
+		<link>https://blog.suei.io/tags/webhook/</link>
 		<description>Recent content in Webhook on Blog | Folarin Raphael</description>
 		<generator>Hugo</generator>
 		<language>en-us</language>
@@ -12,12 +12,12 @@
 		
 			<lastBuildDate>Sun, 28 Jun 2026 00:00:00 +0000</lastBuildDate>
 		
-			<atom:link href="https://blog.suei.dev/tags/webhook/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://blog.suei.io/tags/webhook/index.xml" rel="self" type="application/rss+xml" />
 			<item>
-				<title>KubeRPC v2: Now Actually Kubernetes-Native</title>
-				<link>https://blog.suei.dev/posts/kuberpc_v2/</link>
+				<title>KubeRPC v2: Actually Kubernetes-Native</title>
+				<link>https://blog.suei.io/posts/kuberpc-v2/</link>
 				<pubDate>Sun, 28 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://blog.suei.dev/posts/kuberpc_v2/</guid>
+				<guid>https://blog.suei.io/posts/kuberpc-v2/</guid>
 				<description>&lt;p&gt;About a year and a half ago I wrote about &lt;a href=&#34;https://github.com/darksuei/kubeRPC&#34;&gt;KubeRPC&lt;/a&gt; - a lightweight RPC framework I built to reduce the latency overhead of HTTP-based microservice communication inside a Kubernetes cluster.&lt;/p&gt;&#xA;&lt;p&gt;The core idea was straightforward: instead of going through HTTP for every internal call, services talk to each other directly over persistent TCP connections with MessagePack encoding. Benchmarks showed roughly 60% lower latency compared to equivalent HTTP calls in the same cluster.&lt;/p&gt;</description>
 			</item>
 	</channel>

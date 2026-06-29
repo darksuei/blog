@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Developer Tools on Blog | Folarin Raphael</title>
+		<link>http://localhost:1313/tags/developer-tools/</link>
+		<description>Recent content in Developer Tools on Blog | Folarin Raphael</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+		
+		
+		
+			<lastBuildDate>Sat, 16 Nov 2024 08:49:59 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/tags/developer-tools/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>KubeRPC: Yet Another RPC Framework?</title>
+				<link>http://localhost:1313/posts/yet-another-rpc-framework/</link>
+				<pubDate>Sat, 16 Nov 2024 08:49:59 +0000</pubDate>
+				<guid>http://localhost:1313/posts/yet-another-rpc-framework/</guid>
+				<description>&lt;p&gt;KubeRPC is a lightweight kubernetes-native RPC framework designed to enable seamless and low-latency communication between microservices in a Kubernetes cluster.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;What exactly is an RPC framework?&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://www.ibm.com/docs/en/aix/7.3?topic=concepts-remote-procedure-call&#34;&gt;Remote Procedure Call&lt;/a&gt;(RPC) is a  protocol that allows a program to request a service or execute a functionon another program running on a different server as if it were a local function call.&lt;/p&gt;&#xA;&lt;p&gt;It handles the communication between the two systems, making distributed systems work smoothly.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

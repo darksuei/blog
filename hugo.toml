@@ -1,4 +1,4 @@
-baseURL = 'https://blog.suei.dev'
+baseURL = 'https://blog.suei.io'
 languageCode = 'en-us'
 title = 'Blog | Folarin Raphael'
 theme = 'typo'
@@ -23,7 +23,7 @@ hideHeader = false
 
 # Intro on main page, content in markdown
 homeIntroContent = """
-Infrastructure / Platform Engineer. Building distributed systems and developer infrastructure.
+Software / Infrastructure Engineer. I build and run production systems, and write about how.
 """
 
 singleDateFormat = '2 Jan 2006'
@@ -67,7 +67,7 @@ url = "/posts"
 
 [[params.menu]]
 name = "portfolio"
-url = "https://suei.dev"
+url = "https://suei.io"
 
 # Syntax highlight on code blocks
 [markup]

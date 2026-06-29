@@ -4,7 +4,21 @@ date = '2024-11-16T08:49:59.770Z'
 description = 'KubeRPC is a lightweight kubernetes-native RPC framework designed to enable seamless and low-latency communication between microservices in a Kubernetes cluster.'
 author = 'Folarin Raphael'
 readTime = true
-tags = ["kuberpc", "rpc", "sdk", "kubernetes", "cloud-native", "micorservices"]
+tags = [
+  "kubernetes",
+  "rpc",
+  "grpc",
+  "cloud native",
+  "microservices",
+  "distributed systems",
+  "service discovery",
+  "platform engineering",
+  "infrastructure engineering",
+  "software engineering",
+  "golang",
+  "developer tools",
+  "kuberpc"
+]
 +++
 
 KubeRPC is a lightweight kubernetes-native RPC framework designed to enable seamless and low-latency communication between microservices in a Kubernetes cluster.
